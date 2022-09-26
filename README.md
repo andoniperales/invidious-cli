@@ -1,5 +1,11 @@
 # invidious-cli
 
+A bash script to search and download YouTube videos through the Invidious API. You'll need ```yt-dl```, and ```mpv``` for it to work.
+
+To run it with a custom command, you can attach an alias to it in your ```.bashrc```:
+
+```alias invidious-cli='bash {path/to/}invidious-cli.sh'```
+
 ## How it looks
 ```
  > invidious-cli
