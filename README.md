@@ -1,7 +1,7 @@
 # invidious-cli
 
 ## How it looks
-
+```
  > invidious-cli
 Enter your search query
 emil cioran
@@ -46,3 +46,4 @@ Enter the video number
 
 Do you want to watch it or download it? [w(atch)/d(ownload)]
 w
+```
