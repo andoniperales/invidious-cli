@@ -33,7 +33,7 @@ while :; do
         clear
         echo -e "Results:"
         echo ${arr_t[$n]}
-        echo -e "\n n(ext)/p(revious/w(atch)/d(ownload)/s(earch)"
+        echo -e "\n n(ext)/p(revious)/w(atch)/d(ownload)/s(earch)"
         read opt 
         case $opt in
             n | N) clear; (( n++ )); continue;;
