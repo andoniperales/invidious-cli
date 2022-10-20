@@ -8,7 +8,7 @@ To run it with a custom command, you can attach an alias to it in your ```.bashr
 
 ## How it looks
 ```
- > invidious-cli
+> invidious-cli
 Enter your search query
 randy mamola save
 
