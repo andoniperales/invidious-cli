@@ -13,7 +13,7 @@ Enter your search query
 randy mamola save
 
 Results:
-        1  Randy Mamola highside save 1985 500cc San Marino Grand Prix Misano
+     1  Randy Mamola highside save 1985 500cc San Marino Grand Prix Misano
 
-n(ext)/p(revious/w(atch)/d(ownload)/s(earch)
+n(ext)/p(revious)/w(atch)/d(ownload)/s(earch)
 ```
