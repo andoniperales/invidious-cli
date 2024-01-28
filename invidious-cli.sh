@@ -2,8 +2,20 @@
 
 IFS=$'\n'
 
+instances=(
+yewtu.be vid.puffyan.us yt.artemislena.eu invidious.flokinet.to invidious.projectsegfau.lt invidious.slipfox.xyz invidious.privacydev.net iv.melmac.space iv.ggtyler.dev invidious.lunar.icu inv.nadeko.net inv.tux.pizza invidious.protokolla.fi iv.nboeck.de invidious.private.coffee yt.drgnz.club iv.datura.network invidious.fdn.fr invidious.perennialte.ch youtube.owacon.moe
+)
+
+rand=$(
+        echo $((RANDOM % 19))
+)
+
+instance=$(
+        echo ${instances[$rand]}
+)
+
 while :; do 
-    echo "Enter your search query"
+    echo "Enter your search query:"
     read query
 
     query=$(
@@ -11,15 +23,14 @@ while :; do
         sed 's/\s/+/g'
     )
     
-    results=$(curl "https://invidious.namazso.eu/api/v1/search/?q=$query" -s --retry-all-errors)
+    results=$(curl "https://$instance/api/v1/search/?q=$query" -s --retry-all-errors)
 
     titles=$(
         echo "$results" | 
-        grep -oP '(?<="title":")(.+?)(?=","videoId")' | 
+        grep -oP '(?<="title":")(.+?)(?=",")' | 
+        sed 's/\\"/\"/g' |
         nl -b a
     )
-    
-    arr_t=($titles)
     
     video_ids=$(
         echo $results | 
@@ -27,22 +38,26 @@ while :; do
     )
 
     arr_v=($video_ids)
+        
+        while :; do
+                echo -e "$titles \n"
+                echo "Enter the number of the video you want to watch:"
 
-    for (( n=0;;))
-    do
-        clear
-        echo -e "Results:"
-        echo ${arr_t[$n]}
-        echo -e "\n n(ext)/p(revious)/w(atch)/d(ownload)/s(earch)"
-        read opt 
-        case $opt in
-            n | N) clear; (( n++ )); continue;;
-            p | P) clear; (( n-- )); continue;;
-            w | W) mpv https://yewtu.be/watch?v=${arr_v[$n]} --fs; clear;;
-            d | D) yt-dlp -f 22 https://yewtu.be/watch?v=${arr_v[$n]}; clear;;
-            s | S) clear; break;;
-            *) echo "Wrong input; try again"; sleep 1; clear; continue;;
-        esac
-    done 
-    
+                read n
+                
+                case $n in
+                s | S) break;;
+                esac
+
+                echo "Now enter w to watch, d to download, or s to do a new search:"
+
+                read opt
+
+                case $opt in
+                w | W) mpv https://$instance/watch?v=${arr_v[$n-1]} --fs; clear;;
+                d | D) yt-dlp https://$instance/watch?v=${arr_v[$n-1]}; clear;;
+                s | S) break;;
+                *) echo "Wrong input; try again"; sleep 1; clear; continue;;
+                esac
+        done
 done
