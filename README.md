@@ -1,6 +1,6 @@
 # invidious-cli
 
-A bash script to search and download YouTube videos through the Invidious API. You'll need ```yt-dl``` or ```yt-dlp``` for it to work. I personally use ```mpv``` as the video player; modify the script to suit your preferences.
+A bash script to search, watch, and download YouTube videos through the Invidious API. You'll need ```yt-dl``` or ```yt-dlp``` for it to work. I personally use ```mpv``` as the video player; modify the script to suit your preferences.
 
 ## How it looks
 ```
