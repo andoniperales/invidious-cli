@@ -35,15 +35,6 @@ while :; do
                 nl -b a
         )
         
-        arr_t=($titles)
-
-        dates=$(
-                echo $results |
-                grep -oP '(?<="publishedText":")(.+?)(?=",")'
-        )
-
-        arr_d=($dates)
-    
         video_ids=$(
                 echo $results | 
                 grep -oP '(?<="videoId":")[^"]+?(?=")'
@@ -52,14 +43,9 @@ while :; do
         arr_v=($video_ids)
 
         while :; do
-                n=0
-                for t in ${arr_t[@]} 
-                do
-                        echo -e "${arr_t[$n]} [${arr_d[$n]}]"
-                        n=$n+1
-                done
-
-                echo -e "\nEnter the number of the video you want to watch:"
+                echo "$titles"
+                
+                echo -e "\nEnter the number of the video you want to watch ('s' to do a new search):"
                 
                 read n
                 
