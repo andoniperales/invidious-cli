@@ -55,7 +55,7 @@ while :; do
                 s | S) break;;
                 esac
 
-                echo "Now enter w to watch, d to download, or s to do a new search:"
+                echo "Now enter 'w' to watch, 'd' to download, or 's' to do a new search:"
 
                 read opt
 
