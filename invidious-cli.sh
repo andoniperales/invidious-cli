@@ -14,36 +14,56 @@ instance=$(
         echo ${instances[$rand]}
 )
 
-while :; do 
-    echo "Enter your search query:"
-    read query
+INV="https://$instance" 
+INV_API="$INV/api/v1/search"
 
-    query=$(
-        echo $query | 
-        sed 's/\s/+/g'
-    )
-    
-    results=$(curl "https://$instance/api/v1/search/?q=$query" -s --retry-all-errors)
+while :; do
+        echo "Enter your search query:"
+        read query
 
-    titles=$(
-        echo "$results" | 
-        grep -oP '(?<="title":")(.+?)(?=",")' | 
-        sed 's/\\"/\"/g' |
-        nl -b a
-    )
-    
-    video_ids=$(
-        echo $results | 
-        grep -oP '(?<="videoId":")[^"]+?(?=")'
-    )
+        query=$(
+                echo $query | 
+                sed 's/\s/+/g'
+        )
 
-    arr_v=($video_ids)
+        results=$(curl "$INV_API/?q=$query" -s --retry-all-errors)
+
+        titles=$(
+                echo $results | 
+                grep -oP '(?<="title":")(.+?)(?=",")' | 
+                sed 's/\\"/\"/g' |
+                nl -b a
+        )
         
-        while :; do
-                echo -e "$titles \n"
-                echo "Enter the number of the video you want to watch:"
+        arr_t=($titles)
 
+        dates=$(
+                echo $results |
+                grep -oP '(?<="publishedText":")(.+?)(?=",")'
+        )
+
+        arr_d=($dates)
+    
+        video_ids=$(
+                echo $results | 
+                grep -oP '(?<="videoId":")[^"]+?(?=")'
+        )
+
+        arr_v=($video_ids)
+
+        while :; do
+                n=0
+                for t in ${arr_t[@]} 
+                do
+                        echo -e "${arr_t[$n]} [${arr_d[$n]}]"
+                        n=$n+1
+                done
+
+                echo -e "\nEnter the number of the video you want to watch:"
+                
                 read n
+                
+                VID="$INV/watch?v=${arr_v[$n-1]}"       
                 
                 case $n in
                 s | S) break;;
@@ -54,8 +74,8 @@ while :; do
                 read opt
 
                 case $opt in
-                w | W) mpv https://$instance/watch?v=${arr_v[$n-1]} --fs; clear;;
-                d | D) yt-dlp https://$instance/watch?v=${arr_v[$n-1]}; clear;;
+                w | W) mpv $VID --fs; clear;;
+                d | D) yt-dlp $VID; clear;;
                 s | S) break;;
                 *) echo "Wrong input; try again"; sleep 1; clear; continue;;
                 esac
