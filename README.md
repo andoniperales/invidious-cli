@@ -4,7 +4,7 @@ A bash script to search, watch, and download YouTube videos through the Invidiou
 
 ## How it looks
 ```
->$ invidious 
+> invidious 
 Enter your search query:
 marguerite duras
      1	The Places of Marguerite Duras, Part 1 (dir. Michelle Porte) [ENG, PT, IT, ES Subtitles]
